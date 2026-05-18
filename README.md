@@ -4,7 +4,7 @@ EJEMPLOS REALIDAD AUMENTADA con AR.JS
 
 CDNCAV - demo de creación de contenidos de RA con AR.JS
 
-
+XXX
 
 ## QR code based 
 
