@@ -4,38 +4,35 @@ EJEMPLOS REALIDAD AUMENTADA con AR.JS
 
 CDNCAV - demo de creación de contenidos de RA con AR.JS
 
-XXX
-
-## QR code based 
 
 
+## QR code based 
 
 
 ### Caso 1 - Uso de  **ARJS Studio** (https://ar-js-org.github.io/studio/) 
    Carpeta: [ar](QR/ar) 
 
+
+
+
   (una sóla marca, asociar contenido imagen) 
 
 
-### Caso 2 - Uso de  **ARJS Studio** con modelos 3D (https://ar-js-org.github.io/studio/) 
+### Caso 2 - Uso de  **ARJS Studio** con modelos 3D
 
-   Carpeta: [ar3D](https://github.com/mgea/mgea.github.io/tree/master/XR/ar3D) 
+   https://ar-js-org.github.io/studio/
+   
+   Carpeta: [ar3D](QR/3dAR) 
 
-(una  marca, asociar contenido 3D con formato gltf) 
+   (una  marca, asociar contenido 3D con formato gltf) 
 
-​    
-
-Para crear los modelos gtlt se puede usar https://threejs.org/editor/
-
-
+​   Para crear los modelos gtlt se puede usar https://threejs.org/editor/
 
 
 
 ### Caso 3 - Uso de  **ARJS** con múltiples marcas 
 
-   Carpeta: [webvr](https://github.com/mgea/mgea.github.io/tree/master/XR/webvr) 
-
-
+   Carpeta: [cubeAR](QR/cubeAR) 
 
 
 
@@ -43,12 +40,12 @@ Herramienta para crear códigos QR: https://www.qrcode-monkey.com/es/
 
 
 
-## Location based 
-
+## Location based 
 
 
 ​	Carpeta LOC
 
+   Ejemplo: https://mgea.github.io/XR
 
 
 La localización se puede editar con  https://www.openstreetmap.org/
