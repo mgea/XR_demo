@@ -28,26 +28,6 @@
   <script src="https://cdn.jsdelivr.net/gh/donmccurdy/aframe-extras@v7.2.0/dist/aframe-extras.min.js"></script>
 
    
-  <script>
-  AFRAME.registerComponent('play-on-click', {
-    init: function () {
-      this.el.addEventListener('click', () => {
-        const sound = this.el.components.sound;
-        if (sound) sound.playSound();
-      });
-    }
-  });
-
-  AFRAME.registerComponent('show-info', {
-    init: function () {
-      this.el.addEventListener('click', () => {
-        const info = document.querySelector('#info');
-        info.setAttribute('value', '📍 FCD1 - Punto interactivo en Granada');
-        info.setAttribute('visible', true);
-      });
-    }
-  });
-</script>
 
 
 </head>
@@ -63,17 +43,6 @@
 
   <!-- CÁMARA -->
   <a-camera gps-new-camera="gpsMinDistance: 5" rotation-reader>
-    <a-cursor></a-cursor>
-    <!-- INFO HUD -->
-  <a-text
-    id="info"
-    value=""
-    color="white"
-    visible="false"
-    position="0 2 -3"
-    width="4"
-    align="center">
-  </a-text>
   </a-camera>
 
   <!-- SONIDO GLOBAL -->
@@ -99,16 +68,14 @@
            depth="2"
            height="0.5"
            width="2"
-           position="0 0 0"
-           sound="src: url(https://cdn.pixabay.com/download/audio/2025/05/06/audio_2fd68b9a9a.mp3); autoplay: false"
-           play-on-click></a-box>
+           position="0 0 0">
+          </a-box>
 
   </a-entity>
 
   <!-- 🔵 FCD1 -->
   <a-entity gps-new-entity-place="latitude: 37.193209 ; longitude: -3.596815"
-            look-at="[gps-new-camera]"
-            show-info>
+            look-at="[gps-new-camera]">
 
     <a-text value="FCD1 entrada"
             color="red"
@@ -126,8 +93,7 @@
 
   <!-- 🔴 FCD2 -->
   <a-entity gps-new-entity-place="latitude: 37.193713 ; longitude: -3.596499"
-            look-at="[gps-new-camera]"
-            show-info>
+            look-at="[gps-new-camera]">
 
     <a-text value="FCD2 clase"
             color="red"
@@ -145,8 +111,7 @@
 
   <!-- ⚪ FCD3 -->
   <a-entity gps-new-entity-place="latitude: 37.1938563 ; longitude: -3.595924973"
-            look-at="[gps-new-camera]"
-            show-info>
+            look-at="[gps-new-camera]">
 
     <a-text value="FCD3 patio/despacho"
             color="red"
@@ -157,15 +122,13 @@
     <a-box color="white"
            depth="1"
            height="0.5"
-           width="1.5"
-           play-on-click></a-box>
+           width="1.5"></a-box>
 
   </a-entity>
 
   <!-- 🟣 BUS -->
   <a-entity gps-new-entity-place="latitude: 37.190203 ; longitude: -3.598752"
-            look-at="[gps-new-camera]"
-            show-info>
+            look-at="[gps-new-camera]">
 
     <a-text value="AR Cartuja Bus"
             color="red"
@@ -176,8 +139,7 @@
     <a-box color="pink"
            depth="1"
            height="0.5"
-           width="1.5"
-           play-on-click></a-box>
+           width="1.5"></a-box>
 
   </a-entity>
 
