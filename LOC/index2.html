@@ -29,6 +29,30 @@
   <!-- Hay que añadir también esta para que funcione animactionmixer-->   
   <script src="https://cdn.jsdelivr.net/gh/donmccurdy/aframe-extras@v7.2.0/dist/aframe-extras.min.js"></script> 
     
+
+<script>
+  AFRAME.registerComponent('play-on-click', {
+    init: function () {
+      this.el.addEventListener('click', () => {
+        const sound = this.el.components.sound;
+        if (sound) sound.playSound();
+      });
+    }
+  });
+
+  AFRAME.registerComponent('show-info', {
+    init: function () {
+      this.el.addEventListener('click', () => {
+        const info = document.querySelector('#info');
+        info.setAttribute('value', '📍 FCD1 - Punto interactivo en Granada');
+        info.setAttribute('visible', true);
+      });
+    }
+  });
+  </script>
+
+
+
 </head>
 
 <body style="margin:0; overflow:hidden;">
@@ -45,6 +69,17 @@
     <a-camera
       gps-new-camera="gpsMinDistance: 5"
       rotation-reader>
+
+      <a-text
+    id="info"
+    value=""
+    color="white"
+    visible="false"
+    position="0 2 -3"
+    width="4"
+    align="center">
+     </a-text>
+
     </a-camera>    
     
     
@@ -56,7 +91,7 @@
 
     <a-entity
       gps-new-entity-place="latitude: 37.176590346; longitude: -3.603191"
-      look-at="[gps-camera]">
+      look-at="[gps-camera]" show-info>
 
       <!-- TEXTO (arriba) -->
       <a-text
