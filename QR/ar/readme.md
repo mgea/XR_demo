@@ -14,4 +14,3 @@ ejemplo: https://mgea.github.io/tostadoraz8jw1p/
 
 ![Marca](default-marker.png) 
 
-![Link](qr-code.png)
