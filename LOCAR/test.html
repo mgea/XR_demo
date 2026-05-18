@@ -6,54 +6,75 @@
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
 
+    <!-- A-Frame -->
     <script src="https://aframe.io/releases/1.6.0/aframe.min.js"></script>
 
+    <!-- Importamos LocAR como módulo -->
     <script type="module">
         import * as LOCAR from 'https://cdn.jsdelivr.net/npm/locar/dist/locar.esm.js';
 
-        // Escuchamos al evento 'loaded' de la escena de A-Frame
-        document.addEventListener("DOMContentLoaded", () => {
-            const scene = document.querySelector("a-scene");
+        AFRAME.registerComponent('locar-system', {
+            init: function () {
+                const cameraEl = document.querySelector("a-camera");
+                
+                // Nos aseguramos de que la cámara interna de Three.js esté lista
+                if (!cameraEl.getObject3D('camera')) {
+                    cameraEl.addEventListener('camera-set', () => this.initLocAR());
+                } else {
+                    this.initLocAR();
+                }
+            },
 
-            scene.addEventListener("loaded", async () => {
-                // Ahora scene.camera SÍ existe de forma segura
+            initLocAR: function () {
+                const sceneEl = this.el;
                 const cameraEl = document.querySelector("a-camera");
                 const cameraThree = cameraEl.getObject3D('camera');
 
-                // 1. Inicializar cámara web de fondo
-                const webcam = new LOCAR.WebcamRenderer(scene.renderer);
+                // 1. Inicializar cámara web (¡Ojo! LocAR suele requerir pasarle el elemento canvas de la escena)
+                this.webcam = new LOCAR.WebcamRenderer(sceneEl.renderer, sceneEl.canvas);
 
-                // 2. Inicializar GPS (pasando la cámara de Three.js)
-                const location = new LOCAR.LocationBased(cameraThree, scene.object3D);
+                // 2. Inicializar GPS
+                this.location = new LOCAR.LocationBased(cameraThree, sceneEl.object3D);
 
                 // 3. Inicializar controles de orientación (brújula)
-                const controls = new LOCAR.DeviceOrientationControls(cameraEl.object3D);
+                this.controls = new LOCAR.DeviceOrientationControls(cameraEl.object3D);
 
-                // 4. Obtener la caja y añadirla al GPS usando su object3D
+                // 4. Obtener la caja y añadirla al GPS (Coordenadas en Granada)
                 const box = document.querySelector("#box");
-                
-                // IMPORTANTE: Pasamos box.object3D, no el elemento HTML directamente
-                location.add(box.object3D, 37.176590346, -3.603191);
+                this.location.add(box.object3D, 37.176590346, -3.603191);
 
-                // Iniciar el tracking de la posición del usuario
-                location.startGPS();
+                // Iniciar el tracking GPS y escuchar actualizaciones
+                this.location.startGPS();
 
-                // Loop de renderizado
-                function render() {
-                    controls.update();
-                    webcam.render();
-                    requestAnimationFrame(render);
+                // [Opcional pero recomendado]: Ver por consola si el GPS obtiene tu posición
+                window.addEventListener('gps-camera-update-position', (e) => {
+                    console.log(`Tu posición actual: Lat ${e.detail.position.latitude}, Lon ${e.detail.position.longitude}`);
+                });
+            },
+
+            // Bucle nativo de renderizado de A-Frame
+            tick: function (time, timeDelta) {
+                if (this.controls && this.webcam) {
+                    this.controls.update();
+                    
+                    // IMPORTANTE: Para evitar parpadeos, desactivamos el autoClear del renderer 
+                    // temporalmente mientras LocAR dibuja el fondo de la webcam
+                    const autoClear = this.el.renderer.autoClear;
+                    this.el.renderer.autoClear = false;
+                    
+                    this.webcam.render();
+                    
+                    this.el.renderer.autoClear = autoClear;
                 }
-
-                render();
-            });
+            }
         });
     </script>
 </head>
 
 <body style="margin: 0; overflow: hidden;">
 
-    <a-scene embedded vr-mode-ui="enabled: false">
+    <!-- Añadimos nuestro componente a la escena -->
+    <a-scene locar-system embedded vr-mode-ui="enabled: false">
         
         <a-camera position="0 1.6 0" look-controls="enabled: false"></a-camera>
 
