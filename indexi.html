@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<!-----------------------------------------------------
+ -------------- https://miagenda.in/ar/criav/     
+  ------------- indexi.html  
+  ------------- Creatividad e Innovación Audiovisual - B 
+  ------------- Interactivo
+  ------------- Mapa de puntos de Realidad Aumentada en GRANADA 
+  ------------- 20/1/2026
+  ----------------------------------------------------->
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>AR interactivo CRIAV26</title>
+
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, user-scalable=no">
+
+  <!-- A-Frame -->
+  <script src="https://aframe.io/releases/1.6.0/aframe.min.js"></script>
+
+  <!-- AR.js -->
+  <script src="https://raw.githack.com/AR-js-org/AR.js/3.4.7/aframe/build/aframe-ar.js"></script>
+
+  <!-- Look-at -->
+  <script src="https://unpkg.com/aframe-look-at-component@0.8.0/dist/aframe-look-at-component.min.js"></script>
+
+  <!-- Extras -->
+  <script src="https://cdn.jsdelivr.net/gh/donmccurdy/aframe-extras@v7.2.0/dist/aframe-extras.min.js"></script>
+
+  <script>
+  AFRAME.registerComponent('play-on-click', {
+    init: function () {
+      this.el.addEventListener('click', () => {
+        const sound = this.el.components.sound;
+        if (sound) sound.playSound();
+      });
+    }
+  });
+
+  AFRAME.registerComponent('show-info', {
+    init: function () {
+      this.el.addEventListener('click', () => {
+        const info = document.querySelector('#info');
+        info.setAttribute('value', '📍 FCD1 - Punto interactivo en Granada');
+        info.setAttribute('visible', true);
+      });
+    }
+  });
+  </script>
+
+</head>
+
+<body style="margin:0; overflow:hidden;">
+
+<a-scene
+  vr-mode-ui="enabled: false"
+  renderer="antialias: true; alpha: true"
+  arjs="sourceType: webcam; debugUIEnabled: false;"
+  cursor="rayOrigin: mouse">
+
+  <!-- INFO HUD -->
+  <a-text
+    id="info"
+    value=""
+    color="white"
+    visible="false"
+    position="0 2 -3"
+    width="4"
+    align="center">
+  </a-text>
+
+  <!-- CÁMARA -->
+  <a-camera gps-new-camera="gpsMinDistance: 5" rotation-reader>
+    <a-cursor></a-cursor>
+  </a-camera>
+
+  <!-- SONIDO GLOBAL -->
+  <a-entity sound="src: url(https://cdn.pixabay.com/download/audio/2025/05/06/audio_2fd68b9a9a.mp3); autoplay: false"></a-entity>
+
+  <!-- 🔴 PUNTO 1 -->
+  <!---- *******************************************  -->
+  <!------  C/ Guadalajara PRUEBAS  -------------------->
+
+ 
+  <a-entity gps-new-entity-place="latitude: 37.176590346; longitude: -3.603191"
+            look-at="[gps-camera]"
+            show-info>
+
+    <a-text value="Hola mundo"
+            color="red"
+            align="center"
+            scale="1.5 1.5 1.5"
+            position="0 3 0"></a-text>
+
+    <a-entity gltf-model="url(./assets/christmas-tree.glb)"
+              scale="4 3 4"
+              position="0 1 0"
+              animation="property: rotation; to: 0 360 0; loop: true; dur: 20000"></a-entity>
+
+    <a-box color="green"
+           depth="2"
+           height="0.5"
+           width="2"
+           position="0 0 0"
+           sound="src: url(https://cdn.pixabay.com/download/audio/2025/05/06/audio_2fd68b9a9a.mp3); autoplay: false"
+           play-on-click></a-box>
+
+  </a-entity>
+
+  <!-- 🔵 FCD1 -->
+  <a-entity gps-new-entity-place="latitude: 37.193209 ; longitude: -3.596815"
+            look-at="[gps-camera]"
+            show-info>
+
+    <a-text value="FCD1 entrada"
+            color="red"
+            align="center"
+            scale="1.5 1.5 1.5"
+            position="0 3 0"></a-text>
+
+    <a-box color="blue"
+           depth="1"
+           height="0.5"
+           width="1.5"
+           play-on-click></a-box>
+
+  </a-entity>
+
+  <!-- 🔴 FCD2 -->
+  <a-entity gps-new-entity-place="latitude: 37.193713 ; longitude: -3.596499"
+            look-at="[gps-camera]"
+            show-info>
+
+    <a-text value="FCD2 clase"
+            color="red"
+            align="center"
+            scale="1.5 1.5 1.5"
+            position="0 3 0"></a-text>
+
+    <a-box color="red"
+           depth="1"
+           height="0.5"
+           width="1.5"
+           play-on-click></a-box>
+
+  </a-entity>
+
+  <!-- ⚪ FCD3 -->
+  <a-entity gps-new-entity-place="latitude: 37.1938563 ; longitude: -3.595924973"
+            look-at="[gps-camera]"
+            show-info>
+
+    <a-text value="FCD3 patio/despacho"
+            color="red"
+            align="center"
+            scale="1.5 1.5 1.5"
+            position="0 3 0"></a-text>
+
+    <a-box color="white"
+           depth="1"
+           height="0.5"
+           width="1.5"
+           play-on-click></a-box>
+
+  </a-entity>
+
+  <!-- 🟣 BUS -->
+  <a-entity gps-new-entity-place="latitude: 37.190203 ; longitude: -3.598752"
+            look-at="[gps-camera]"
+            show-info>
+
+    <a-text value="AR Cartuja Bus"
+            color="red"
+            align="center"
+            scale="2 2 2"
+            position="0 3 0"></a-text>
+
+    <a-box color="pink"
+           depth="1"
+           height="0.5"
+           width="1.5"
+           play-on-click></a-box>
+
+  </a-entity>
+
+</a-scene>
+
+</body>
+</html>
