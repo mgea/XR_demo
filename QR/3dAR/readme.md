@@ -12,7 +12,11 @@ Finalmente se sube contenido a github (repositorio Web)
 
 ![Marca](default-marker.png) 
 
-![Link](qr-codeEco.png)
+
+
+https://mgea.github.io/XR/QR/3dAR
+
+
 
 
 Updated: 17/05/2022
