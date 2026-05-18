@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>WebXR AR Interactivo</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+
+    <!-- A-Frame -->
+    <script src="https://aframe.io/releases/1.6.0/aframe.min.js"></script>
+
+    <!-- AR.js para soporte de Geolocalización -->
+    <script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar-nft.js"></script>
+
+    <script>
+        // Registramos un componente personalizado para manejar la interacción
+        AFRAME.registerComponent('interactivo', {
+            init: function () {
+                const el = this.el; // El objeto (en este caso, el a-box)
+
+                // Escuchamos el evento 'click' (que en AR se activa al tocar el objeto en la pantalla)
+                el.addEventListener('click', function () {
+                    // 1. Generar un color aleatorio
+                    const colores = ['#FF5733', '#33FF57', '#3357FF', '#F3FF33', '#FF33F3', '#33FFF0'];
+                    const colorAleatorio = colores[Math.floor(Math.random() * colores.length)];
+                    
+                    // 2. Cambiar el color del objeto
+                    el.setAttribute('material', 'color', colorAleatorio);
+
+                    // 3. Lanzar la animación de "pálpito" (definida abajo en el HTML)
+                    el.emit('pulsar');
+                    
+                    console.log(`¡Cubo tocado! Nuevo color: ${colorAleatorio}`);
+                });
+            }
+        });
+    </script>
+</head>
+
+<body style="margin: 0; overflow: hidden;">
+
+    <!-- 
+      Configuramos la escena. 
+      Añadimos 'raycaster' para que la escena busque objetos interactivos mediante el toque.
+    -->
+    <a-scene 
+        embedded 
+        arjs="sourceType: webcam; videoTexture: true; debugUIEnabled: false;"
+        webxr="optionalFeatures: hit-test, local-floor;"
+        raycaster="objects: .clickable">
+        
+        <a-camera gps-camera rotation-reader>
+            <!-- 
+              EL CURSOR VIRTUAL: 
+              Este componente invisible proyecta un rayo desde el centro de la pantalla.
+              'fuse: false' hace que requiera un toque físico en la pantalla para activarse.
+            -->
+            <a-cursor 
+                raycaster="objects: .clickable" 
+                fuse="false">
+            </a-cursor>
+        </a-camera>
+
+        <!-- 
+          OBJETO INTERACTIVO:
+          - class="clickable": Permite que el raycaster de la cámara lo detecte.
+          - interactivo: Llama a nuestro script de cambio de color.
+          - animation: Se activa cuando el script emite el evento 'pulsar'.
+        -->
+        <a-box
+            id="box"
+            class="clickable"
+            interactivo
+            color="red"
+            scale="5 5 5"
+            gps-entity-place="latitude: 37.176590346; longitude: -3.603191;"
+            animation="property: scale; to: 6 6 6; dir: alternate; dur: 150; startEvents: pulsar; loop: 1">
+        </a-box>
+
+    </a-scene>
+
+</body>
+</html>
