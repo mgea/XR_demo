@@ -1,4 +1,4 @@
-# XR_demo 
+# XR demos 
 
 EJEMPLOS REALIDAD AUMENTADA con AR.JS
 
