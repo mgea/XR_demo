@@ -1,68 +1,69 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8">
-<title>LocAR Test</title>
+    <meta charset="UTF-8">
+    <title>LocAR Test</title>
 
-<meta name="viewport"
-content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
 
-<script src="https://aframe.io/releases/1.6.0/aframe.min.js"></script>
+    <script src="https://aframe.io/releases/1.6.0/aframe.min.js"></script>
 
-<script type="module">
+    <script type="module">
+        import * as LOCAR from 'https://cdn.jsdelivr.net/npm/locar/dist/locar.esm.js';
 
-import * as LOCAR from 'https://cdn.jsdelivr.net/npm/locar/dist/locar.esm.js';
+        // Escuchamos al evento 'loaded' de la escena de A-Frame
+        document.addEventListener("DOMContentLoaded", () => {
+            const scene = document.querySelector("a-scene");
 
-window.addEventListener("load", async () => {
+            scene.addEventListener("loaded", async () => {
+                // Ahora scene.camera SÍ existe de forma segura
+                const cameraEl = document.querySelector("a-camera");
+                const cameraThree = cameraEl.getObject3D('camera');
 
-    const scene = document.querySelector("a-scene");
+                // 1. Inicializar cámara web de fondo
+                const webcam = new LOCAR.WebcamRenderer(scene.renderer);
 
-    // cámara webcam
-    const webcam = new LOCAR.WebcamRenderer(scene);
+                // 2. Inicializar GPS (pasando la cámara de Three.js)
+                const location = new LOCAR.LocationBased(cameraThree, scene.object3D);
 
-    // GPS
-    const location = new LOCAR.LocationBased(scene.camera, scene);
+                // 3. Inicializar controles de orientación (brújula)
+                const controls = new LOCAR.DeviceOrientationControls(cameraEl.object3D);
 
-    // brújula
-    const controls = new LOCAR.DeviceOrientationControls(scene.camera);
+                // 4. Obtener la caja y añadirla al GPS usando su object3D
+                const box = document.querySelector("#box");
+                
+                // IMPORTANTE: Pasamos box.object3D, no el elemento HTML directamente
+                location.add(box.object3D, 37.176590346, -3.603191);
 
-    // caja
-    const box = document.querySelector("#box");
+                // Iniciar el tracking de la posición del usuario
+                location.startGPS();
 
-    // coordenadas
-    location.add(box, 37.176590346, -3.603191);
+                // Loop de renderizado
+                function render() {
+                    controls.update();
+                    webcam.render();
+                    requestAnimationFrame(render);
+                }
 
-    // loop render
-    function render() {
-
-        controls.update();
-
-        webcam.render(scene);
-
-        requestAnimationFrame(render);
-    }
-
-    render();
-
-});
-
-</script>
-
+                render();
+            });
+        });
+    </script>
 </head>
 
-<body style="margin:0; overflow:hidden;">
+<body style="margin: 0; overflow: hidden;">
 
-<a-scene embedded vr-mode-ui="enabled: false">
+    <a-scene embedded vr-mode-ui="enabled: false">
+        
+        <a-camera position="0 1.6 0" look-controls="enabled: false"></a-camera>
 
-    <a-camera position="0 1.6 0"></a-camera>
+        <a-box
+            id="box"
+            color="red"
+            scale="5 5 5">
+        </a-box>
 
-    <a-box
-        id="box"
-        color="red"
-        scale="5 5 5">
-    </a-box>
-
-</a-scene>
+    </a-scene>
 
 </body>
 </html>
