@@ -1,74 +1,80 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-<meta charset="UTF-8">
-<title>LocAR Granada</title>
-
 <!------ LocAR.js + A-Frame    -->
 <!----   https://github.com/AR-js-org/locar.js/      -->
 
-<meta name="viewport"
-content="width=device-width, initial-scale=1.0, user-scalable=no">
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>LocAR Granada</title>
 
-<!-- AFRAME -->
-<script src="https://aframe.io/releases/1.6.0/aframe.min.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
 
-<!-- LocAR.js -->
-<script type="module">
+    <script src="https://aframe.io/releases/1.6.0/aframe.min.js"></script>
 
-import * as LOCAR from 'https://cdn.jsdelivr.net/npm/locar@latest/dist/locar.esm.js';
+    <script type="module">
+        import * as LOCAR from 'https://cdn.jsdelivr.net/npm/locar/dist/locar.esm.js';
 
-window.addEventListener("load", async () => {
+        // 1. Esperamos a que la ventana cargue...
+        window.addEventListener("load", () => {
+            const scene = document.querySelector("a-scene");
 
-    const scene = document.querySelector("a-scene");
+            // 2. ...y CRÍTICO: Esperamos a que A-Frame inicialice la escena y la cámara
+            scene.addEventListener("loaded", async () => {
+                
+                // Ahora scene.camera y scene.object3D ya existen con certeza
+                const cameraEntity = document.querySelector("a-camera");
+                const cameraObject3D = cameraEntity.object3D; 
 
-    // Crear cámara LocAR
-    const camera = new LOCAR.WebcamRenderer(scene);
+                // webcam renderer
+                const webcam = new LOCAR.WebcamRenderer(scene);
 
-    // GPS
-    const location = new LOCAR.LocationBased(scene.camera, scene);
+                // GPS (Pasamos el objeto 3D de la cámara y de la escena)
+                const location = new LOCAR.LocationBased(
+                    cameraObject3D,
+                    scene.object3D
+                );
 
-    // Brújula
-    const controls = new LOCAR.DeviceOrientationControls(scene.camera);
+                // brújula / Orientación del dispositivo
+                const controls = new LOCAR.DeviceOrientationControls(
+                    cameraObject3D
+                );
 
-    // OBJETO 1
-    const box = document.querySelector("#box1");
+                // objeto
+                const box = document.querySelector("#box1");
 
-    location.add(box, 37.176590346, -3.603191);
+                // añadir objeto al GPS (Coordenadas de Granada)
+                location.add(
+                    box.object3D,
+                    37.176590346,
+                    -3.603191
+                );
 
-    // render loop
-    function render() {
+                // Inicializar GPS para empezar a trackear la posición real del usuario
+                location.startGPS();
 
-        controls.update();
+                // loop de renderizado
+                function render() {
+                    requestAnimationFrame(render);
 
-        camera.render(scene);
+                    controls.update();
+                    webcam.render();
+                }
 
-        requestAnimationFrame(render);
-    }
-
-    render();
-
-});
-
-</script>
+                render();
+            });
+        });
+    </script>
 </head>
 
 <body style="margin:0; overflow:hidden;">
 
-<a-scene embedded vr-mode-ui="enabled: false">
+    <a-scene embedded vr-mode-ui="enabled: false">
+        
+        <a-camera position="0 1.6 0"></a-camera>
 
-    <!-- cámara -->
-    <a-camera position="0 1.6 0"></a-camera>
+        <a-box id="box1" color="red" scale="5 5 5"></a-box>
 
-    <!-- objeto -->
-    <a-box
-        id="box1"
-        color="red"
-        scale="5 5 5"
-        position="0 0 0">
-    </a-box>
-
-</a-scene>
+    </a-scene>
 
 </body>
 </html>
