@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>LocAR Granada</title>
+
+<!------ LocAR.js + A-Frame    -->
+<!----   https://github.com/AR-js-org/locar.js/      -->
+
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0, user-scalable=no">
+
+<!-- AFRAME -->
+<script src="https://aframe.io/releases/1.6.0/aframe.min.js"></script>
+
+<!-- LocAR.js -->
+<script type="module">
+
+import * as LOCAR from 'https://cdn.jsdelivr.net/npm/locar@latest/dist/locar.esm.js';
+
+window.addEventListener("load", async () => {
+
+    const scene = document.querySelector("a-scene");
+
+    // Crear cámara LocAR
+    const camera = new LOCAR.WebcamRenderer(scene);
+
+    // GPS
+    const location = new LOCAR.LocationBased(scene.camera, scene);
+
+    // Brújula
+    const controls = new LOCAR.DeviceOrientationControls(scene.camera);
+
+    // OBJETO 1
+    const box = document.querySelector("#box1");
+
+    location.add(box, 37.176590346, -3.603191);
+
+    // render loop
+    function render() {
+
+        controls.update();
+
+        camera.render(scene);
+
+        requestAnimationFrame(render);
+    }
+
+    render();
+
+});
+
+</script>
+</head>
+
+<body style="margin:0; overflow:hidden;">
+
+<a-scene embedded vr-mode-ui="enabled: false">
+
+    <!-- cámara -->
+    <a-camera position="0 1.6 0"></a-camera>
+
+    <!-- objeto -->
+    <a-box
+        id="box1"
+        color="red"
+        scale="5 5 5"
+        position="0 0 0">
+    </a-box>
+
+</a-scene>
+
+</body>
+</html>

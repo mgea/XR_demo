@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>LocAR Test</title>
+
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0, user-scalable=no">
+
+<script src="https://aframe.io/releases/1.6.0/aframe.min.js"></script>
+
+<script type="module">
+
+import * as LOCAR from 'https://cdn.jsdelivr.net/npm/locar/dist/locar.esm.js';
+
+window.addEventListener("load", async () => {
+
+    const scene = document.querySelector("a-scene");
+
+    // cámara webcam
+    const webcam = new LOCAR.WebcamRenderer(scene);
+
+    // GPS
+    const location = new LOCAR.LocationBased(scene.camera, scene);
+
+    // brújula
+    const controls = new LOCAR.DeviceOrientationControls(scene.camera);
+
+    // caja
+    const box = document.querySelector("#box");
+
+    // coordenadas
+    location.add(box, 37.176590346, -3.603191);
+
+    // loop render
+    function render() {
+
+        controls.update();
+
+        webcam.render(scene);
+
+        requestAnimationFrame(render);
+    }
+
+    render();
+
+});
+
+</script>
+
+</head>
+
+<body style="margin:0; overflow:hidden;">
+
+<a-scene embedded vr-mode-ui="enabled: false">
+
+    <a-camera position="0 1.6 0"></a-camera>
+
+    <a-box
+        id="box"
+        color="red"
+        scale="5 5 5">
+    </a-box>
+
+</a-scene>
+
+</body>
+</html>
