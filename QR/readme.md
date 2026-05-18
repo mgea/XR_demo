@@ -9,7 +9,7 @@
 
 ​	https://ar-js-org.github.io/studio/
 
-   	Carpeta: [ar](https://github.com/mgea/mgea.github.io/tree/master/XR/ar) 
+   Carpeta: [ar](ar) 
 
   (una sóla marca, asociar contenido imagen) 
 
@@ -19,7 +19,7 @@
 
 ​	Modelos creados con https://threejs.org/editor/index.html
 
-​        Carpeta: 3dAR 
+​  Carpeta: 3dAR 
 
 ​	(una  marca, asociar contenido 3D con formato gltf) 
 
