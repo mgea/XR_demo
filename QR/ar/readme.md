@@ -12,6 +12,4 @@ ejemplo: https://mgea.github.io/tostadoraz8jw1p/
 
 
 
-![Marca](default-marker.png) 
-
-![qr-code](qr-code.png)
+![Marca](default-marker.png)  <img src="qr-code.png" width="450px"> 
