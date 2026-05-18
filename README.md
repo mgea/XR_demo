@@ -12,7 +12,7 @@ XXX
 
 
 ### Caso 1 - Uso de  **ARJS Studio** (https://ar-js-org.github.io/studio/) 
-   Carpeta: [ar](https://github.com/mgea/mgea.github.io/tree/master/XR/ar) 
+   Carpeta: [ar](QR/ar) 
 
   (una sóla marca, asociar contenido imagen) 
 
