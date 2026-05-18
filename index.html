@@ -27,7 +27,7 @@
   <!-- Extras -->
   <script src="https://cdn.jsdelivr.net/gh/donmccurdy/aframe-extras@v7.2.0/dist/aframe-extras.min.js"></script>
 
-  <!------ 
+   
   <script>
   AFRAME.registerComponent('play-on-click', {
     init: function () {
@@ -47,8 +47,8 @@
       });
     }
   });
-  </script>
----->
+</script>
+
 
 </head>
 
@@ -56,10 +56,15 @@
 
 <a-scene
   vr-mode-ui="enabled: false"
-  renderer="antialias: true; alpha: true"
+  renderer="antialias: true; alpha: true; logarithmicDepthBuffer: true;"
   arjs="sourceType: webcam; debugUIEnabled: false;">
 
-  <!-- INFO HUD -->
+  
+
+  <!-- CÁMARA -->
+  <a-camera gps-new-camera="gpsMinDistance: 5" rotation-reader>
+    <a-cursor></a-cursor>
+    <!-- INFO HUD -->
   <a-text
     id="info"
     value=""
@@ -69,10 +74,6 @@
     width="4"
     align="center">
   </a-text>
-
-  <!-- CÁMARA -->
-  <a-camera gps-new-camera="gpsMinDistance: 5" rotation-reader>
-    <a-cursor></a-cursor>
   </a-camera>
 
   <!-- SONIDO GLOBAL -->
@@ -84,7 +85,8 @@
 
  
   <a-entity gps-new-entity-place="latitude: 37.176590346; longitude: -3.603191"
-            look-at="[gps-camera]"
+            look-at="[gps-new-camera]"
+            distance="min: 0; max: 300"
             show-info>
 
     <a-text value="Hola mundo"
@@ -92,11 +94,6 @@
             align="center"
             scale="1.5 1.5 1.5"
             position="0 3 0"></a-text>
-
-    <a-entity gltf-model="url(./assets/christmas-tree.glb)"
-              scale="4 3 4"
-              position="0 1 0"
-              animation="property: rotation; to: 0 360 0; loop: true; dur: 20000"></a-entity>
 
     <a-box color="green"
            depth="2"
@@ -110,7 +107,7 @@
 
   <!-- 🔵 FCD1 -->
   <a-entity gps-new-entity-place="latitude: 37.193209 ; longitude: -3.596815"
-            look-at="[gps-camera]"
+            look-at="[gps-new-camera]"
             show-info>
 
     <a-text value="FCD1 entrada"
@@ -129,7 +126,7 @@
 
   <!-- 🔴 FCD2 -->
   <a-entity gps-new-entity-place="latitude: 37.193713 ; longitude: -3.596499"
-            look-at="[gps-camera]"
+            look-at="[gps-new-camera]"
             show-info>
 
     <a-text value="FCD2 clase"
@@ -148,7 +145,7 @@
 
   <!-- ⚪ FCD3 -->
   <a-entity gps-new-entity-place="latitude: 37.1938563 ; longitude: -3.595924973"
-            look-at="[gps-camera]"
+            look-at="[gps-new-camera]"
             show-info>
 
     <a-text value="FCD3 patio/despacho"
@@ -167,7 +164,7 @@
 
   <!-- 🟣 BUS -->
   <a-entity gps-new-entity-place="latitude: 37.190203 ; longitude: -3.598752"
-            look-at="[gps-camera]"
+            look-at="[gps-new-camera]"
             show-info>
 
     <a-text value="AR Cartuja Bus"
@@ -191,7 +188,7 @@
 
    <a-entity
       gps-new-entity-place="latitude: 37.175169; longitude: -3.599811"
-      look-at="[gps-camera]">
+      look-at="[gps-new-camera]">
 
       <!-- TEXTO (arriba) -->
       <a-text
@@ -207,7 +204,7 @@
   <!------  2 Plaza Catedral   --------------------->
   <a-entity
       gps-new-entity-place="latitude: 37.176129; longitude: -3.59971"
-      look-at="[gps-camera]">
+      look-at="[gps-new-camera]">
 
       <!-- TEXTO (arriba) -->
       <a-text
@@ -261,7 +258,7 @@
 
  <a-entity
       gps-new-entity-place="latitude: 37.1721343; longitude: -3.5986366"
-      look-at="[gps-camera]">
+      look-at="[gps-new-camera]">
 
       <!-- TEXTO (arriba) -->
       <a-text
@@ -326,7 +323,7 @@
   <!------  8 Metro Universidad ----------------------->
 <a-entity
       gps-new-entity-place="latitude: 37.1808463; longitude: -3.6085702"
-      look-at="[gps-camera]">
+      look-at="[gps-new-camera]">
 
       <!-- TEXTO (arriba) -->
       <a-text
@@ -354,7 +351,7 @@
 
       <a-entity
     gps-new-entity-place="latitude: 37.1838348; longitude: -3.6084079"
-      look-at="[gps-camera]">
+      look-at="[gps-new-camera]">
 
       <!-- TEXTO (arriba) -->
       <a-text
@@ -382,7 +379,7 @@
 
 <a-entity
      gps-new-entity-place="latitude: 37.1784688; longitude: -3.60605567"
-      look-at="[gps-camera]">
+      look-at="[gps-new-camera]">
 
     
     <a-entity
