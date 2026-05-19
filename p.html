@@ -85,20 +85,34 @@
                 position="0 3 0">
             </a-text>
 
-            <a-entity
-                gltf-model="url(./assets/christmas-tree.glb)"
-                scale="4 3 4"
-                position="0 1 0"
-                animation="property: rotation; to: 0 360 0; loop: true; dur: 20000; easing: linear">
-            </a-entity>
-          
+        
             <a-box
                 color="green"
                 depth="2"
                 height="0.5"
                 width="2"
                 position="0 0 0"
-                animation="property: rotation; to: 0 360 0; dur: 4000; loop: true">
+                
+                class="clickable"
+
+            sound="src: url(https://cdn.pixabay.com/download/audio/2024/08/27/audio_01f4d44703.mp3)"
+          play-on-click
+        show-info
+
+    animation__enter="
+      property: scale;
+      startEvents: mouseenter;
+      to: 1.3 1.3 1.3;
+      dur: 300"
+
+    animation__leave="
+      property: scale;
+      startEvents: mouseleave;
+      to: 1 1 1;
+      dur: 300">
+                
+                
+                >
             </a-box>
         
         </a-entity>
