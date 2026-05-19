@@ -34,7 +34,7 @@
     }
   });
 
-  <!--- usando mouseenter / leave-->
+  /* --- usando mouseenter / leave ---*/
  AFRAME.registerComponent('show-info', {
 
   init: function () {
@@ -169,7 +169,7 @@ AFRAME.registerComponent('show-info', {
                 scale="1 1 1"
                 animation="property: rotation; to: 0 360 0; dur: 6000; loop: true"
                 class="clickable"
-                changecolor
+                change-color
             sound="src: url(https://cdn.pixabay.com/download/audio/2024/08/27/audio_01f4d44703.mp3)"
           play-on-click
         show-info
@@ -177,7 +177,7 @@ AFRAME.registerComponent('show-info', {
     animation__enter="
       property: scale;
       startEvents: mouseenter;
-      to: 2 3.8 1.8;
+      to: 1.5 1.5 1.5;
       dur: 300"
 
     animation__leave="
@@ -187,7 +187,7 @@ AFRAME.registerComponent('show-info', {
       dur: 300">
                 
                 
-                >
+                
             </a-box>
         
         </a-entity>
