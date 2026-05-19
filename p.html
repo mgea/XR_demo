@@ -34,16 +34,35 @@
     }
   });
 
-  AFRAME.registerComponent('show-info', {
-    init: function () {
-      this.el.addEventListener('click', () => {
-        const info = document.querySelector('#info');
-        info.setAttribute('value', '📍 FCD1 - Punto interactivo en Granada');
-        info.setAttribute('visible', true);
-      });
-    }
-  });
+  <!--- usando mouseenter / leave-->
+ AFRAME.registerComponent('show-info', {
 
+  init: function () {
+
+    this.el.addEventListener('mouseenter', () => {
+
+      const info = document.querySelector('#info');
+
+      info.setAttribute(
+        'value',
+        '📍 Plaza Bib-Rambla'
+      );
+
+      info.setAttribute('visible', true);
+
+    });
+
+    this.el.addEventListener('mouseleave', () => {
+
+      const info = document.querySelector('#info');
+
+      info.setAttribute('visible', false);
+
+    });
+
+  }
+
+});
 /***
 AFRAME.registerComponent('show-info', {
   schema: {
