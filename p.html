@@ -25,6 +25,31 @@
     <script src="https://cdn.jsdelivr.net/gh/donmccurdy/aframe-extras@v7.2.0/dist/aframe-extras.min.js"></script> 
 
 <script>
+
+
+/**** Contador de elementos ***/
+let count = 0;
+
+AFRAME.registerComponent('click-counter', {
+
+  init: function () {
+
+    this.el.addEventListener('click', () => {
+
+      count++;
+
+      const counter = document.querySelector('#counter');
+
+      counter.setAttribute('value', 'Clicks: ' + count);
+
+    });
+
+  }
+
+});
+/***********************************/
+
+
   AFRAME.registerComponent('play-on-click', {
     init: function () {
       this.el.addEventListener('click', () => {
@@ -157,7 +182,7 @@ AFRAME.registerComponent('show-info', {
                 color="red"
                 align="center"
                 scale="1.5 1.5 1.5"
-                position="0 3 0">
+                position="0 2 0">
             </a-text>
 
         
@@ -171,6 +196,7 @@ AFRAME.registerComponent('show-info', {
                 animation="property: rotation; to: 0 360 0; dur: 6000; loop: true"
                 class="clickable"
                 change-color
+                click-counter
             sound="src: url(https://cdn.pixabay.com/download/audio/2024/08/27/audio_01f4d44703.mp3)"
           play-on-click
         show-info
