@@ -65,7 +65,8 @@ AFRAME.registerComponent('click-counter', {
   init: function () {
 
     this.el.addEventListener('mouseenter', () => {
-
+      const sound = this.el.components.sound2;
+        if (sound) sound.playSound();
       const info = document.querySelector('#info');
 
       info.setAttribute(
@@ -198,6 +199,7 @@ AFRAME.registerComponent('show-info', {
                 change-color
                 click-counter
             sound="src: url(https://cdn.pixabay.com/download/audio/2024/08/27/audio_01f4d44703.mp3)"
+            sound2="src: url(https://cdn.pixabay.com/download/audio/2022/03/19/audio_4634bb6c9d.mp3) "
           play-on-click
         show-info
 
