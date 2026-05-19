@@ -43,6 +43,28 @@
       });
     }
   });
+
+
+  AFRAME.registerComponent('change-color', {
+
+  init: function () {
+
+    this.el.addEventListener('click', () => {
+
+      const current = this.el.getAttribute('color');
+
+      if(current === 'red'){
+        this.el.setAttribute('color', 'blue');
+      } else {
+        this.el.setAttribute('color', 'red');
+      }
+
+    });
+
+  }
+
+});
+
   </script>
 
 
@@ -94,6 +116,7 @@
                 position="0 0 0"
                 
                 class="clickable"
+                changecolor
 
             sound="src: url(https://cdn.pixabay.com/download/audio/2024/08/27/audio_01f4d44703.mp3)"
           play-on-click
@@ -102,7 +125,7 @@
     animation__enter="
       property: scale;
       startEvents: mouseenter;
-      to: 1.3 1.3 1.3;
+      to: 1 1.8 1;
       dur: 300"
 
     animation__leave="
