@@ -551,7 +551,7 @@ AFRAME.registerComponent('show-info', {
             <a-sphere>
                 color="yellow"
                 radius="2"
-                position="0 1 0"
+                position="0 3 0"
                 class="clickable"
 
 
@@ -611,6 +611,53 @@ AFRAME.registerComponent('show-info', {
         
             <a-sphere
                 color="yellow"
+                radius="2"
+                position="0 0 0"
+                class="clickable"
+                change-color
+                click-counter
+            sound="src: url(https://cdn.pixabay.com/download/audio/2024/08/27/audio_01f4d44703.mp3)"
+            sound2="src: url(https://cdn.pixabay.com/download/audio/2022/03/19/audio_4634bb6c9d.mp3) "
+          play-on-click
+        show-info
+
+    animation__enter="
+      property: scale;
+      startEvents: mouseenter;
+      to: 3.5 3.5 3.5;
+      dur: 300"
+
+    animation__leave="
+      property: scale;
+      startEvents: mouseleave;
+      to: 2 2 2;
+      dur: 300">
+                
+                
+                
+            </a-sphere>
+        
+        </a-entity>
+        
+
+
+
+   <!------  6 AR CARTUJA  BALL 2   --------------------->
+  <!------           --------------------->
+      <a-entity gps-new-entity-place="latitude: 37.1938969; longitude: -3.5963460" look-at="#camera">
+
+            <a-text
+                value="Ball 2"
+                font="https://cdn.aframe.io/fonts/Exo2Bold.fnt"
+                color="red"
+                align="center"
+                scale="2.5 2.5 2.5"
+                position="0 2 0">
+            </a-text>
+
+        
+            <a-sphere
+                color="pink"
                 radius="2"
                 position="0 0 0"
                 class="clickable"
