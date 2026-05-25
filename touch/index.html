@@ -1,0 +1,911 @@
+<!DOCTYPE html>
+<!-----------------------------------------------------
+  -------------- https://mgea.github.io/XR  
+  -----       p1.html (prueba interactiva)
+  ------------- index.html   v1.0
+  ------------- Location 
+  ------------- Creatividad e Innovación Audiovisual - B 
+  ------------- Mapa de puntos de Realidad Aumentada en GRANADA 
+  ------------- 18/5/2026
+  ----------------------------------------------------->
+<html>
+<head>
+    <meta charset="utf-8">    
+    <title>AR. P-int 26 </title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+
+    <script src="https://aframe.io/releases/1.6.0/aframe.min.js"></script>
+
+    <script src="https://raw.githack.com/AR-js-org/AR.js/3.4.7/aframe/build/aframe-ar.js"></script>
+
+    <script src="https://unpkg.com/aframe-look-at-component@0.8.0/dist/aframe-look-at-component.min.js"></script>
+  
+    <script type='text/javascript' src='https://raw.githack.com/AR-js-org/AR.js/3.4.7/three.js/build/ar-threex-location-only.js'></script>
+
+    <script src="https://cdn.jsdelivr.net/gh/donmccurdy/aframe-extras@v7.2.0/dist/aframe-extras.min.js"></script> 
+
+<script>
+
+
+/**** Contador de elementos ***/
+let count = 0;
+
+AFRAME.registerComponent('click-counter', {
+
+  init: function () {
+
+    this.el.addEventListener('click', () => {
+
+      count++;
+
+      const counter = document.querySelector('#counter');
+
+      counter.setAttribute('value', 'Clicks: ' + count);
+
+    });
+
+  }
+
+});
+/***********************************/
+
+
+  AFRAME.registerComponent('play-on-click', {
+    init: function () {
+      this.el.addEventListener('click', () => {
+        const sound = this.el.components.sound;
+        if (sound) sound.playSound();
+      });
+    }
+  });
+
+  /* --- usando mouseenter / leave ---*/
+ AFRAME.registerComponent('show-info', {
+
+  init: function () {
+
+    this.el.addEventListener('mouseenter', () => {
+      const sound = this.el.components.sound2;
+        if (sound) sound.playSound();
+      const info = document.querySelector('#info');
+
+      info.setAttribute(
+        'value',
+        '📍 Plaza Bib-Rambla'
+      );
+
+      info.setAttribute('visible', true);
+
+    });
+
+    this.el.addEventListener('mouseleave', () => {
+
+      const info = document.querySelector('#info');
+
+      info.setAttribute('visible', false);
+
+    });
+
+  }
+
+});
+/***
+AFRAME.registerComponent('show-info', {
+  schema: {
+    text: {type: 'string'}
+  },
+
+  init: function () {
+    this.el.addEventListener('click', () => {
+
+      const info = document.querySelector('#info');
+
+      info.setAttribute('value', this.data.text);
+
+      info.setAttribute('visible', true);
+
+      setTimeout(() => {
+        info.setAttribute('visible', false);
+      }, 3000);
+
+    });
+  }
+});
+
+***/
+  AFRAME.registerComponent('change-color', {
+
+  init: function () {
+
+    this.el.addEventListener('click', () => {
+
+      const current = this.el.getAttribute('color');
+
+      if(current === 'red'){
+        this.el.setAttribute('color', 'blue');
+      } else {
+        this.el.setAttribute('color', 'red');
+      }
+
+    });
+
+  }
+
+});
+
+  </script>
+
+
+
+
+
+  </head>
+
+
+<body style="margin:0; overflow:hidden;">
+    
+    <a-scene
+        vr-mode-ui="enabled: false"
+        renderer="antialias: true; alpha: true"
+        arjs="sourceType: webcam; debugUIEnabled: false;">
+
+        <a-camera id="camera" gps-new-camera="gpsMinDistance: 5">
+
+            <!----- III añadido -->
+        <a-cursor
+            color="yellow"
+           fuse="true"
+            fuse-timeout="1200"
+            raycaster="objects: .clickable">
+        </a-cursor>
+
+        </a-camera>    
+       
+        
+<!---- panel show info ----> 
+      <a-text
+        id="info"
+        value=""
+        visible="false"
+        color="yellow"
+        align="center"
+        position="0 -0.5 -2"
+        scale="1.5 1.5 1.5">
+      </a-text>
+
+
+         <!-------  C/ Guadalajara PRUEBAS  ------------------- -->
+        <a-entity gps-new-entity-place="latitude: 37.176590346; longitude: -3.603191" look-at="#camera">
+
+            <a-text
+                value="PlazaLobos"
+                font="https://cdn.aframe.io/fonts/Exo2Bold.fnt"
+                color="red"
+                align="center"
+                scale="1.5 1.5 1.5"
+                position="0 2 0">
+            </a-text>
+
+        
+            <a-box
+                color="green"
+                depth="2"
+                height="0.5"
+                width="2"
+                position="0 0 0"
+                scale="1 1 1"
+                animation="property: rotation; to: 0 360 0; dur: 6000; loop: true"
+                class="clickable"
+                change-color
+                click-counter
+            sound="src: url(https://cdn.pixabay.com/download/audio/2024/08/27/audio_01f4d44703.mp3)"
+            sound2="src: url(https://cdn.pixabay.com/download/audio/2022/03/19/audio_4634bb6c9d.mp3) "
+          play-on-click
+        show-info
+
+    animation__enter="
+      property: scale;
+      startEvents: mouseenter;
+      to: 1.5 1.5 1.5;
+      dur: 300"
+
+    animation__leave="
+      property: scale;
+      startEvents: mouseleave;
+      to: 1 1 1;
+      dur: 300">
+                
+                
+                
+            </a-box>
+        
+        </a-entity>
+        
+
+
+
+
+
+    <!------  1 FCD1 - entrada ------------------- -->
+    <!-- ENTIDAD GPS DUCK  blue  ------------>
+
+        <a-entity gps-new-entity-place="latitude: 37.193209; longitude: -3.596815;" look-at="#camera">
+
+            <a-text
+                value="FCD1 entrada"
+                font="https://cdn.aframe.io/fonts/Exo2Bold.fnt"
+                color="red"
+                align="center"
+                scale="1.5 1.5 1.5"
+                position="0 3 0">
+            </a-text>
+
+            <a-entity
+                gltf-model="url(https://cdn.jsdelivr.net/gh/KhronosGroup/glTF-Sample-Models@master/2.0/Duck/glTF-Binary/Duck.glb)"   
+                scale="1.5 1.5 1.5"
+                position="0 0.5 0"
+                animation="property: rotation; to: 0 360 0; dur: 6000; loop: true">
+            </a-entity>
+
+            <a-box
+                color="blue"
+                depth="1"
+                height="0.5"
+                width="1.5"
+                position="0 0 0"
+                animation="property: rotation; to: 0 360 0; dur: 4000; loop: true">
+            </a-box>
+        </a-entity>
+
+
+      <!------  2 FCD2 - Clase     ----------->
+      <!-- ENTIDAD GPS DUCK  ROJO ------------>
+
+        
+        <a-entity gps-new-entity-place="latitude: 37.193713; longitude: -3.596499;" look-at="#camera">
+
+            <a-text
+                value="FCD2 clase"
+                font="https://cdn.aframe.io/fonts/Exo2Bold.fnt"
+                color="red"
+                align="center"
+                scale="1.5 1.5 1.5"
+                position="0 3 0">
+            </a-text>
+
+            <a-entity
+                gltf-model="url(https://cdn.jsdelivr.net/gh/KhronosGroup/glTF-Sample-Models@master/2.0/Duck/glTF-Binary/Duck.glb)"   
+                scale="1.5 1.5 1.5"
+                position="0 0.5 0"
+                animation="property: rotation; to: 0 360 0; dur: 6000; loop: true">
+            </a-entity>
+
+            <a-box
+                color="red"
+                depth="1"
+                height="0.5"
+                width="1.5"
+                position="0 0 0"
+                animation="property: rotation; to: 0 360 0; dur: 4000; loop: true">
+            </a-box>
+        </a-entity>
+        
+
+
+      <!------  3 FCD3 despacho/pasillo  ------------------- -->
+      <!-- ENTIDAD GPS ÚNICA CON 3 OBJ: DUCK ------------>
+
+        <a-entity gps-new-entity-place="latitude: 37.1938563; longitude: -3.595924973;" look-at="#camera">
+
+            <a-text
+                value="FCD3 patio/despacho"
+                font="https://cdn.aframe.io/fonts/Exo2Bold.fnt"
+                color="red"
+                align="center"
+                scale="1.5 1.5 1.5"
+                position="0 3 0">
+            </a-text>
+
+            <a-entity
+                gltf-model="url(https://cdn.jsdelivr.net/gh/KhronosGroup/glTF-Sample-Models@master/2.0/Duck/glTF-Binary/Duck.glb)"   
+                scale="1.5 1.5 1.5"
+                position="0 0.5 0"
+                animation="property: rotation; to: 0 360 0; dur: 6000; loop: true">
+            </a-entity>
+
+            <a-box
+                color="white"
+                depth="1"
+                height="0.5"
+                width="1.5"
+                position="0 0 0"
+                animation="property: rotation; to: 0 360 0; dur: 4000; loop: true">
+            </a-box>
+        </a-entity>
+
+
+      <!------  4 AR CARTUJA  BUS   --------------------->
+       <!------           --------------------->
+
+
+        <a-entity gps-new-entity-place="latitude: 37.190203; longitude: -3.598752;" look-at="#camera">
+
+            <a-text
+                value="AR Cartuja Bus"
+                font="https://cdn.aframe.io/fonts/Exo2Bold.fnt"
+                color="red"
+                align="center"
+                scale="2 2 2"
+                position="0 3 0">
+            </a-text>
+
+            <a-box
+                color="pink"
+                depth="1"
+                height="0.5"
+                width="1.5"
+                position="0 0 0"
+                animation="property: rotation; to: 0 360 0; dur: 4000; loop: true">
+            </a-box>
+        </a-entity>
+
+
+       <!------  5 AR CARTUJA  despacho X   --------------------->
+       <!------           --------------------->
+
+
+        <a-entity gps-new-entity-place="latitude: 37.193595; longitude: -3.59569966" look-at="#camera">
+
+            <a-text
+                value="FCD X"
+                font="https://cdn.aframe.io/fonts/Exo2Bold.fnt"
+                color="red"
+                align="center"
+                scale="2.5 2.5 2.5"
+                position="0 2 0">
+            </a-text>
+
+        
+            <a-box
+                color="green"
+                depth="2"
+                height="0.5"
+                width="2"
+                position="0 0 0"
+                scale="2 2 2"
+                animation="property: rotation; to: 0 360 0; dur: 6000; loop: true"
+                class="clickable"
+                change-color
+                click-counter
+            sound="src: url(https://cdn.pixabay.com/download/audio/2024/08/27/audio_01f4d44703.mp3)"
+            sound2="src: url(https://cdn.pixabay.com/download/audio/2022/03/19/audio_4634bb6c9d.mp3) "
+          play-on-click
+        show-info
+
+    animation__enter="
+      property: scale;
+      startEvents: mouseenter;
+      to: 2.5 2.5 2.5;
+      dur: 300"
+
+    animation__leave="
+      property: scale;
+      startEvents: mouseleave;
+      to: 2 2 2;
+      dur: 300">
+                
+                
+                
+            </a-box>
+        
+        </a-entity>
+        
+
+
+
+
+
+
+
+
+
+    <!------  1 FCD1 - entrada ------------------- -->
+    <!-- ENTIDAD GPS DUCK  blue  ------------>
+
+        <a-entity gps-new-entity-place="latitude: 37.193209; longitude: -3.596815;" look-at="#camera">
+
+            <a-text
+                value="FCD1 entrada"
+                font="https://cdn.aframe.io/fonts/Exo2Bold.fnt"
+                color="red"
+                align="center"
+                scale="1.5 1.5 1.5"
+                position="0 3 0">
+            </a-text>
+
+            <a-entity
+                gltf-model="url(https://cdn.jsdelivr.net/gh/KhronosGroup/glTF-Sample-Models@master/2.0/Duck/glTF-Binary/Duck.glb)"   
+                scale="1.5 1.5 1.5"
+                position="0 0.5 0"
+                animation="property: rotation; to: 0 360 0; dur: 6000; loop: true">
+            </a-entity>
+
+            <a-box
+                color="blue"
+                depth="1"
+                height="0.5"
+                width="1.5"
+                position="0 0 0"
+                animation="property: rotation; to: 0 360 0; dur: 4000; loop: true">
+            </a-box>
+        </a-entity>
+
+
+      <!------  2 FCD2 - Clase     ----------->
+      <!-- ENTIDAD GPS DUCK  ROJO ------------>
+
+        
+        <a-entity gps-new-entity-place="latitude: 37.193713; longitude: -3.596499;" look-at="#camera">
+
+            <a-text
+                value="FCD2 clase"
+                font="https://cdn.aframe.io/fonts/Exo2Bold.fnt"
+                color="red"
+                align="center"
+                scale="1.5 1.5 1.5"
+                position="0 3 0">
+            </a-text>
+
+            <a-entity
+                gltf-model="url(https://cdn.jsdelivr.net/gh/KhronosGroup/glTF-Sample-Models@master/2.0/Duck/glTF-Binary/Duck.glb)"   
+                scale="1.5 1.5 1.5"
+                position="0 0.5 0"
+                animation="property: rotation; to: 0 360 0; dur: 6000; loop: true">
+            </a-entity>
+
+            <a-box
+                color="red"
+                depth="1"
+                height="0.5"
+                width="1.5"
+                position="0 0 0"
+                animation="property: rotation; to: 0 360 0; dur: 4000; loop: true">
+            </a-box>
+        </a-entity>
+        
+
+
+      <!------  3 FCD3 despacho/pasillo  ------------------- -->
+      <!-- ENTIDAD GPS ÚNICA CON 3 OBJ: DUCK ------------>
+
+        <a-entity gps-new-entity-place="latitude: 37.1938563; longitude: -3.595924973;" look-at="#camera">
+
+            <a-text
+                value="FCD3 patio/despacho"
+                font="https://cdn.aframe.io/fonts/Exo2Bold.fnt"
+                color="red"
+                align="center"
+                scale="1.5 1.5 1.5"
+                position="0 3 0">
+            </a-text>
+
+            <a-entity
+                gltf-model="url(https://cdn.jsdelivr.net/gh/KhronosGroup/glTF-Sample-Models@master/2.0/Duck/glTF-Binary/Duck.glb)"   
+                scale="1.5 1.5 1.5"
+                position="0 0.5 0"
+                animation="property: rotation; to: 0 360 0; dur: 6000; loop: true">
+            </a-entity>
+
+            <a-box
+                color="white"
+                depth="1"
+                height="0.5"
+                width="1.5"
+                position="0 0 0"
+                animation="property: rotation; to: 0 360 0; dur: 4000; loop: true">
+            </a-box>
+        </a-entity>
+
+
+      <!------  4 AR CARTUJA  BUS   --------------------->
+       <!------           --------------------->
+
+
+        <a-entity gps-new-entity-place="latitude: 37.190203; longitude: -3.598752;" look-at="#camera">
+
+            <a-text
+                value="AR Cartuja Bus"
+                font="https://cdn.aframe.io/fonts/Exo2Bold.fnt"
+                color="red"
+                align="center"
+                scale="2 2 2"
+                position="0 3 0">
+            </a-text>
+
+            <a-box
+                color="pink"
+                depth="1"
+                height="0.5"
+                width="1.5"
+                position="0 0 0"
+                animation="property: rotation; to: 0 360 0; dur: 4000; loop: true">
+            </a-box>
+        </a-entity>
+
+
+       <!------  5 AR CARTUJA  despacho X   --------------------->
+       <!------           --------------------->
+
+
+        <a-entity gps-new-entity-place="latitude: 37.193595; longitude: -3.59569966" look-at="#camera">
+
+            <a-text
+                value="FCD X"
+                font="https://cdn.aframe.io/fonts/Exo2Bold.fnt"
+                color="red"
+                align="center"
+                scale="2.5 2.5 2.5"
+                position="0 2 0">
+            </a-text>
+
+            <a-sphere>
+                color="yellow"
+                radius="2"
+                position="0 3 0"
+                class="clickable"
+
+
+
+            </a-sphere>
+        
+            <a-box
+                color="green"
+                depth="2"
+                height="0.5"
+                width="2"
+                position="0 0 0"
+                scale="2 2 2"
+                animation="property: rotation; to: 0 360 0; dur: 6000; loop: true"
+                class="clickable"
+                change-color
+                click-counter
+            sound="src: url(https://cdn.pixabay.com/download/audio/2024/08/27/audio_01f4d44703.mp3)"
+            sound2="src: url(https://cdn.pixabay.com/download/audio/2022/03/19/audio_4634bb6c9d.mp3) "
+          play-on-click
+        show-info
+
+    animation__enter="
+      property: scale;
+      startEvents: mouseenter;
+      to: 2.5 2.5 2.5;
+      dur: 300"
+
+    animation__leave="
+      property: scale;
+      startEvents: mouseleave;
+      to: 2 2 2;
+      dur: 300">
+                
+                
+                
+            </a-box>
+        
+        </a-entity>
+        
+
+
+
+   <!------  6 AR CARTUJA  BALL 1   --------------------->
+  <!------           --------------------->
+      <a-entity gps-new-entity-place="latitude: 37.1937238; longitude: -3.5963594" look-at="#camera">
+
+            <a-text
+                value="Ball 1"
+                font="https://cdn.aframe.io/fonts/Exo2Bold.fnt"
+                color="red"
+                align="center"
+                scale="2.5 2.5 2.5"
+                position="0 2 0">
+            </a-text>
+
+        
+            <a-sphere
+                color="yellow"
+                radius="2"
+                position="0 0 0"
+                class="clickable"
+                change-color
+                click-counter
+            sound="src: url(https://cdn.pixabay.com/download/audio/2024/08/27/audio_01f4d44703.mp3)"
+            sound2="src: url(https://cdn.pixabay.com/download/audio/2022/03/19/audio_4634bb6c9d.mp3) "
+          play-on-click
+        show-info
+
+    animation__enter="
+      property: scale;
+      startEvents: mouseenter;
+      to: 3.5 3.5 3.5;
+      dur: 300"
+
+    animation__leave="
+      property: scale;
+      startEvents: mouseleave;
+      to: 2 2 2;
+      dur: 300">
+                
+                
+                
+            </a-sphere>
+        
+        </a-entity>
+        
+
+
+
+   <!------  6 AR CARTUJA  BALL 2   --------------------->
+  <!------           --------------------->
+      <a-entity gps-new-entity-place="latitude: 37.1938969; longitude: -3.5963460" look-at="#camera">
+
+            <a-text
+                value="Ball 2"
+                font="https://cdn.aframe.io/fonts/Exo2Bold.fnt"
+                color="red"
+                align="center"
+                scale="2.5 2.5 2.5"
+                position="0 2 0">
+            </a-text>
+
+        
+            <a-sphere
+                color="pink"
+                radius="2"
+                position="0 0 0"
+                class="clickable"
+                change-color
+                click-counter
+            sound="src: url(https://cdn.pixabay.com/download/audio/2024/08/27/audio_01f4d44703.mp3)"
+            sound2="src: url(https://cdn.pixabay.com/download/audio/2022/03/19/audio_4634bb6c9d.mp3) "
+          play-on-click
+        show-info
+
+    animation__enter="
+      property: scale;
+      startEvents: mouseenter;
+      to: 3.5 3.5 3.5;
+      dur: 300"
+
+    animation__leave="
+      property: scale;
+      startEvents: mouseleave;
+      to: 2 2 2;
+      dur: 300">
+                
+                
+                
+            </a-sphere>
+        
+        </a-entity>
+        
+
+
+
+
+
+
+
+
+
+
+      <!------  CENTRO   --------------------->
+
+  <!------  1 Plaza Bibrambla  --------------------->
+
+   <a-entity
+      gps-new-entity-place="latitude: 37.175169; longitude: -3.599811"
+      look-at="[gps-new-camera]">
+
+      <!-- TEXTO (arriba) -->
+      <a-text
+        value="Plaza Bibrambla"
+        font="https://cdn.aframe.io/fonts/Exo2Bold.fnt"
+        color="red"
+        align="center"
+        scale="2 2 2"
+        position="0 3 0">
+      </a-text>
+    </a-entity>
+
+  <!------  2 Plaza Catedral   --------------------->
+  <a-entity
+      gps-new-entity-place="latitude: 37.176129; longitude: -3.59971"
+      look-at="[gps-new-camera]">
+
+      <!-- TEXTO (arriba) -->
+      <a-text
+        value="Catedral"
+        color="blue"
+        align="center"
+        scale="2 2 2"
+        position="0 3 0">
+      </a-text>
+      <!-- BOX (abajo / base) -->
+      <a-box
+        color="white"
+        depth="1"
+        height="0.5"
+        width="1.5"
+        position="0 0 0"
+        animation="property: rotation; to: 0 360 0; dur: 4000; loop: true">
+      </a-box>
+
+    </a-entity>
+    
+
+<!------  3 Plaza Ayuntamiento    ----------------->
+
+<a-entity
+      gps-new-entity-place="latitude: 37.174139; longitude: -3.598752"
+      look-at="[gps-new-camera]">
+
+      <!-- TEXTO (arriba) -->
+      <a-text
+        value="Ayuntamiento"
+        color="blue"
+        align="center"
+        scale="2 2 2"
+        position="0 3 0">
+      </a-text>
+      <!-- BOX (abajo / base) -->
+      <a-box
+        color="purple"
+        depth="1"
+        height="0.5"
+        width="1.5"
+        position="0 0 0"
+        animation="property: rotation; to: 0 360 0; dur: 4000; loop: true">
+      </a-box>
+
+    </a-entity>
+
+
+<!------  4 Fuente de las Batallas  ---------------->
+
+ <a-entity
+      gps-new-entity-place="latitude: 37.1721343; longitude: -3.5986366"
+      look-at="[gps-new-camera]">
+
+      <!-- TEXTO (arriba) -->
+      <a-text
+        value="F Batallas"
+        color="blue"
+        align="center"
+        scale="2 2 2"
+        position="0 3 0">
+      </a-text>
+
+      <!-- MODELO GLTF (centro) -->
+      <a-entity
+        gltf-model="url(./assets/asset-javidelgado.gltf)"
+        scale="1 1 1"
+        position="0 1.2 0"
+        animation="property: rotation; to: 0 180 0; dur: 6000; loop: true">
+      </a-entity>
+      
+      <!-- BOX (abajo / base) -->
+      <a-box
+        color="yellow"
+        depth="1"
+        height="0.5"
+        width="1.5"
+        position="0 0 0"
+        animation="property: rotation; to: 0 360 0; dur: 4000; loop: true">
+      </a-box>
+
+    </a-entity>
+    
+
+ <!------  5 ETSII Informatica       ---------------->
+ <a-entity
+      gps-new-entity-place="latitude: 37.196813; longitude: -3.624311"
+      look-at="[gps-new-camera]">
+
+      <!-- TEXTO (arriba) -->
+      <a-text
+        value="ETSIIT"
+        color="blue"
+        align="center"
+        scale="2 2 2"
+        position="0 3 0">
+      </a-text>
+
+  
+      <!-- BOX (abajo / base) -->
+      <a-box
+        color="pink"
+        depth="1"
+        height="0.5"
+        width="1.5"
+        position="0 0 0"
+        animation="property: rotation; to: 0 360 0; dur: 4000; loop: true">
+      </a-box>
+
+
+      
+    </a-entity>
+    
+
+  <!------  8 Metro Universidad ----------------------->
+<a-entity
+      gps-new-entity-place="latitude: 37.1808463; longitude: -3.6085702"
+      look-at="[gps-new-camera]">
+
+      <!-- TEXTO (arriba) -->
+      <a-text
+        value="Metro U"
+        font="https://cdn.aframe.io/fonts/Exo2Bold.fnt"
+        color="blue"
+        align="center"
+        scale="2 2 2"
+        position="0 3 0">
+      </a-text>
+
+      <!-- BOX (abajo / base) -->
+      <a-box
+        color="orange"
+        depth="1"
+        height="0.5"
+        width="1.5"
+        position="0 0 0"
+        animation="property: rotation; to: 0 360 0; dur: 4000; loop: true">
+      </a-box>
+
+    </a-entity>
+    
+     <!------  9 FFCC             ---------------------->
+
+      <a-entity
+    gps-new-entity-place="latitude: 37.1838348; longitude: -3.6084079"
+      look-at="[gps-new-camera]">
+
+      <!-- TEXTO (arriba) -->
+      <a-text
+        value="FFCC"
+        font="https://cdn.aframe.io/fonts/Exo2Bold.fnt"
+        color="blue"
+        align="center"
+        scale="2 2 2"
+        position="0 3 0">
+      </a-text>
+            <!-- BOX (abajo / base) --> 
+      <a-box
+        color="white"
+        depth="1"
+        height="0.5"
+        width="1.5"
+        position="0 0 0"
+        animation="property: rotation; to: 0 360 0; dur: 4000; loop: true">
+      </a-box>
+
+    </a-entity>
+
+
+<!------  10 BIblAndalucia     ---------------------->
+
+<a-entity
+     gps-new-entity-place="latitude: 37.1784688; longitude: -3.60605567"
+      look-at="[gps-new-camera]">
+
+    
+    <a-entity
+        gltf-model="url(https://raw.githack.com/KhronosGroup/glTF-Sample-Models/master/2.0/RobotExpressive/glTF-Binary/RobotExpressive.glb)"
+        scale="0.5 0.5 0.5"
+        position="0 2.5 0"
+        animation-mixer="clip: Walking; loop: repeat"
+    ></a-entity>
+
+    </a-entity>
+    
+
+    </a-scene>
+</body>
+</html>
