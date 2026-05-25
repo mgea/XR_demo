@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <!-----------------------------------------------------
- -------------- https://mgea.github.io/XR  
+  -------------- https://mgea.github.io/XR  
+  -----       p1.html (prueba interactiva)
   ------------- index.html   v1.0
   ------------- Location 
   ------------- Creatividad e Innovación Audiovisual - B 
@@ -10,7 +11,7 @@
 <html>
 <head>
     <meta charset="utf-8">    
-    <title>AR CRIAV26 </title>
+    <title>AR. P-int 26 </title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
 
     <script src="https://aframe.io/releases/1.6.0/aframe.min.js"></script>
@@ -23,13 +24,123 @@
 
     <script src="https://cdn.jsdelivr.net/gh/donmccurdy/aframe-extras@v7.2.0/dist/aframe-extras.min.js"></script> 
 
+<script>
 
+
+/**** Contador de elementos ***/
+let count = 0;
+
+AFRAME.registerComponent('click-counter', {
+
+  init: function () {
+
+    this.el.addEventListener('click', () => {
+
+      count++;
+
+      const counter = document.querySelector('#counter');
+
+      counter.setAttribute('value', 'Clicks: ' + count);
+
+    });
+
+  }
+
+});
+/***********************************/
+
+
+  AFRAME.registerComponent('play-on-click', {
+    init: function () {
+      this.el.addEventListener('click', () => {
+        const sound = this.el.components.sound;
+        if (sound) sound.playSound();
+      });
+    }
+  });
+
+  /* --- usando mouseenter / leave ---*/
+ AFRAME.registerComponent('show-info', {
+
+  init: function () {
+
+    this.el.addEventListener('mouseenter', () => {
+      const sound = this.el.components.sound2;
+        if (sound) sound.playSound();
+      const info = document.querySelector('#info');
+
+      info.setAttribute(
+        'value',
+        '📍 Plaza Bib-Rambla'
+      );
+
+      info.setAttribute('visible', true);
+
+    });
+
+    this.el.addEventListener('mouseleave', () => {
+
+      const info = document.querySelector('#info');
+
+      info.setAttribute('visible', false);
+
+    });
+
+  }
+
+});
+/***
+AFRAME.registerComponent('show-info', {
+  schema: {
+    text: {type: 'string'}
+  },
+
+  init: function () {
+    this.el.addEventListener('click', () => {
+
+      const info = document.querySelector('#info');
+
+      info.setAttribute('value', this.data.text);
+
+      info.setAttribute('visible', true);
+
+      setTimeout(() => {
+        info.setAttribute('visible', false);
+      }, 3000);
+
+    });
+  }
+});
+
+***/
+  AFRAME.registerComponent('change-color', {
+
+  init: function () {
+
+    this.el.addEventListener('click', () => {
+
+      const current = this.el.getAttribute('color');
+
+      if(current === 'red'){
+        this.el.setAttribute('color', 'blue');
+      } else {
+        this.el.setAttribute('color', 'red');
+      }
+
+    });
+
+  }
+
+});
+
+  </script>
 
 
 
 
 
   </head>
+
 
 <body style="margin:0; overflow:hidden;">
     
@@ -38,8 +149,29 @@
         renderer="antialias: true; alpha: true"
         arjs="sourceType: webcam; debugUIEnabled: false;">
 
-        <a-camera id="camera" gps-new-camera="gpsMinDistance: 5"></a-camera>    
+        <a-camera id="camera" gps-new-camera="gpsMinDistance: 5">
+
+            <!----- III añadido -->
+        <a-cursor
+            color="yellow"
+           fuse="true"
+            fuse-timeout="1200"
+            raycaster="objects: .clickable">
+        </a-cursor>
+
+        </a-camera>    
+       
         
+<!---- panel show info ----> 
+      <a-text
+        id="info"
+        value=""
+        visible="false"
+        color="yellow"
+        align="center"
+        position="0 -0.5 -2"
+        scale="1.5 1.5 1.5">
+      </a-text>
 
 
          <!-------  C/ Guadalajara PRUEBAS  ------------------- -->
@@ -51,27 +183,49 @@
                 color="red"
                 align="center"
                 scale="1.5 1.5 1.5"
-                position="0 3 0">
+                position="0 2 0">
             </a-text>
 
-            <a-entity
-                gltf-model="url(./assets/christmas-tree.glb)"
-                scale="4 3 4"
-                position="0 1 0"
-                animation="property: rotation; to: 0 360 0; loop: true; dur: 20000; easing: linear">
-            </a-entity>
-          
+        
             <a-box
                 color="green"
                 depth="2"
                 height="0.5"
                 width="2"
                 position="0 0 0"
-                animation="property: rotation; to: 0 360 0; dur: 4000; loop: true">
+                scale="1 1 1"
+                animation="property: rotation; to: 0 360 0; dur: 6000; loop: true"
+                class="clickable"
+                change-color
+                click-counter
+            sound="src: url(https://cdn.pixabay.com/download/audio/2024/08/27/audio_01f4d44703.mp3)"
+            sound2="src: url(https://cdn.pixabay.com/download/audio/2022/03/19/audio_4634bb6c9d.mp3) "
+          play-on-click
+        show-info
+
+    animation__enter="
+      property: scale;
+      startEvents: mouseenter;
+      to: 1.5 1.5 1.5;
+      dur: 300"
+
+    animation__leave="
+      property: scale;
+      startEvents: mouseleave;
+      to: 1 1 1;
+      dur: 300">
+                
+                
+                
             </a-box>
         
         </a-entity>
         
+
+
+
+
+
     <!------  1 FCD1 - entrada ------------------- -->
     <!-- ENTIDAD GPS DUCK  blue  ------------>
 
@@ -194,6 +348,58 @@
                 animation="property: rotation; to: 0 360 0; dur: 4000; loop: true">
             </a-box>
         </a-entity>
+
+
+       <!------  5 AR CARTUJA  despacho X   --------------------->
+       <!------           --------------------->
+
+
+        <a-entity gps-new-entity-place="latitude: 37.193595; longitude: -3.59569966" look-at="#camera">
+
+            <a-text
+                value="FCD X"
+                font="https://cdn.aframe.io/fonts/Exo2Bold.fnt"
+                color="red"
+                align="center"
+                scale="1.5 1.5 1.5"
+                position="0 2 0">
+            </a-text>
+
+        
+            <a-box
+                color="green"
+                depth="2"
+                height="0.5"
+                width="2"
+                position="0 0 0"
+                scale="1 1 1"
+                animation="property: rotation; to: 0 360 0; dur: 6000; loop: true"
+                class="clickable"
+                change-color
+                click-counter
+            sound="src: url(https://cdn.pixabay.com/download/audio/2024/08/27/audio_01f4d44703.mp3)"
+            sound2="src: url(https://cdn.pixabay.com/download/audio/2022/03/19/audio_4634bb6c9d.mp3) "
+          play-on-click
+        show-info
+
+    animation__enter="
+      property: scale;
+      startEvents: mouseenter;
+      to: 1.5 1.5 1.5;
+      dur: 300"
+
+    animation__leave="
+      property: scale;
+      startEvents: mouseleave;
+      to: 1 1 1;
+      dur: 300">
+                
+                
+                
+            </a-box>
+        
+        </a-entity>
+        
 
 
 
